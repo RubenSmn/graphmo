@@ -12,6 +12,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint src/**/*.ts"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RubenSmn/graphmo.git"
+  },
   "author": "RubenSmn",
   "exports": {
     "import": "./dist/index.js"
