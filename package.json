@@ -1,8 +1,10 @@
 {
   "name": "graphm",
+  "private": true,
   "version": "1.0.0",
   "description": "interactive graph tool",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "npm run lint && rimraf dist/ && tsc",
@@ -11,6 +13,9 @@
     "lint": "eslint src/**/*.ts"
   },
   "author": "RubenSmn",
+  "exports": {
+    "import": "./dist/index.js"
+  },
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^17.0.18",
