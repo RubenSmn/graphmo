@@ -18,7 +18,7 @@ export class GraphView {
   readonly ctx: CanvasRenderingContext2D;
   nodes: BaseNode[] = [];
   conns: BaseConn[] = [];
-  private selection: BaseNode;
+  private _selection: BaseNode;
 
   constructor(config: GraphViewConfig) {
     this.root = config.parent;
@@ -37,7 +37,7 @@ export class GraphView {
     this.dom.addEventListener('mouseup', this.onUpGraphNode);
     this.dom.addEventListener('mousemove', this.onMoveGraphNode);
 
-    this.selection = null;
+    this._selection = null;
 
     window.onresize = this.resizeCanvas;
   }
@@ -57,7 +57,7 @@ export class GraphView {
    * Handle mouseup event
    */
   private onUpGraphNode = (e: MouseEvent): void => {
-    if (this.selection === null || this.selection.isSelected === false) {
+    if (this._selection === null || this._selection.isSelected === false) {
       const node = new GraphNode(
         e.x,
         e.y,
@@ -69,10 +69,10 @@ export class GraphView {
       );
       node.setSelected(true);
       this.addNode(node);
-      this.selection = node;
+      this._selection = node;
     }
-    this.selection.setSelected(false);
-    this.selection.draw(this.ctx);
+    this._selection.setSelected(false);
+    this._selection.draw(this.ctx);
   };
 
   /**
@@ -82,21 +82,21 @@ export class GraphView {
     const node = this.getNodeWithin(e.x, e.y);
     if (node === null) return;
 
-    if (this.selection !== null && this.selection !== node) {
-      this.connectNode(this.selection, node);
+    if (this._selection !== null && this._selection !== node) {
+      this.connectNode(this._selection, node);
     } else {
-      this.selection = node;
+      this._selection = node;
     }
-    this.selection.setSelected(true);
-    this.selection.draw(this.ctx);
+    this._selection.setSelected(true);
+    this._selection.draw(this.ctx);
   };
 
   /**
    * Handle mousemove event
    */
   private onMoveGraphNode = (e: MouseEvent): void => {
-    if (this.selection === null || this.selection.isSelected === false) return;
-    this.selection.setPos(e.x, e.y);
+    if (this._selection === null || this._selection.isSelected === false) return;
+    this._selection.setPos(e.x, e.y);
     this.updateCanvas();
   };
 
