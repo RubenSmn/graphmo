@@ -2,7 +2,7 @@
   "name": "graphmo",
   "private": true,
   "version": "1.0.0",
-  "description": "interactive graph tool",
+  "description": "Interactive graph builder",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
