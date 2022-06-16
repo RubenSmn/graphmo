@@ -1,3 +1,3 @@
 # Graphmo
 
-An interactive graph builder :construction_site: wip
+An interactive graph builder :building_construction: wip
