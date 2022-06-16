@@ -42,13 +42,19 @@ export class GraphView {
     window.onresize = this.resizeCanvas;
   }
 
+  /**
+   * Add node to graph view
+   */
   addNode(node: BaseNode): void {
     this.nodes.push(node);
     node.draw(this.ctx);
   }
 
+  /**
+   * Connect two nodes with a connection
+   */
   connectNode(nodeA: BaseNode, nodeB: BaseNode): void {
-    const conn = new LineConn(nodeA, nodeB, '#000');
+    const conn = new LineConn(nodeA, nodeB, '#000'); // hardcoded for now
     this.conns.push(conn);
     this.updateCanvas();
   }
