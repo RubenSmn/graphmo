@@ -18,7 +18,7 @@ export class GraphView {
   readonly ctx: CanvasRenderingContext2D;
   nodes: BaseNode[] = [];
   conns: BaseConn[] = [];
-  private selection: { item: BaseNode; isMoving: boolean };
+  private selection: BaseNode;
 
   constructor(config: GraphViewConfig) {
     this.root = config.parent;
@@ -37,7 +37,7 @@ export class GraphView {
     this.dom.addEventListener('mouseup', this.onUpGraphNode);
     this.dom.addEventListener('mousemove', this.onMoveGraphNode);
 
-    this.selection = { item: null, isMoving: false };
+    this.selection = null;
 
     window.onresize = this.resizeCanvas;
   }
@@ -57,36 +57,47 @@ export class GraphView {
    * Handle mouseup event
    */
   private onUpGraphNode = (e: MouseEvent): void => {
-    if (!this.selection.item || !this.selection.isMoving) {
+    if (this.selection === null) {
       const node = new GraphNode(
         e.x,
         e.y,
         24,
-        '#ff3',
-        '#333',
-        'node' + this.nodes.length,
+        '#2cc',
+        '#099',
+        '#8aa',
+        String(this.nodes.length),
       );
       this.addNode(node);
     }
-    this.selection = { item: null, isMoving: false };
+    if (this.selection !== null && this.selection.isSelected) {
+      this.selection.setSelected(false);
+      this.selection.draw(this.ctx);
+    }
   };
 
   /**
    * Handle mousedown event
    */
   private onDownGraphNode = (e: MouseEvent): void => {
-    const item = this.getNodeWithin(e.x, e.y);
-    if (item === null) return;
-    this.selection.item = item;
+    const node = this.getNodeWithin(e.x, e.y);
+    if (this.selection === null) return;
+    if (this.selection.isSelected) this.selection.setSelected(false);
+
+    if (node === null) return;
+
+    if (this.selection !== node) this.connectNode(this.selection, node);
+
+    this.selection = node;
+    this.selection.setSelected(true);
+    this.selection.draw(this.ctx);
   };
 
   /**
    * Handle mousemove event
    */
   private onMoveGraphNode = (e: MouseEvent): void => {
-    if (this.selection.item === null) return;
-    this.selection.isMoving = true;
-    this.selection.item.setPos(e.x, e.y);
+    if (this.selection === null || !this.selection.isSelected) return;
+    this.selection.setPos(e.x, e.y);
     this.updateCanvas();
   };
 
@@ -94,8 +105,8 @@ export class GraphView {
    * Return node where x,y are in bounds
    */
   private getNodeWithin(x: number, y: number): BaseNode | null {
-    for (const item of this.nodes) {
-      if (item.isInbounds(x, y)) return item;
+    for (const node of this.nodes) {
+      if (node.isInbounds(x, y)) return node;
     }
     return null;
   }

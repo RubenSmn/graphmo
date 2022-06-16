@@ -4,6 +4,8 @@ export class BaseNode {
   radius: number;
   fillStyle: string;
   strokeStyle: string;
+  selectedStyle: string;
+  isSelected = false;
 
   constructor(
     _x: number,
@@ -11,12 +13,14 @@ export class BaseNode {
     _radius: number,
     _fillStyle: string,
     _strokeStyle: string,
+    _selectedStyle: string,
   ) {
     this.x = _x;
     this.y = _y;
     this.radius = _radius;
     this.fillStyle = _fillStyle;
     this.strokeStyle = _strokeStyle;
+    this.selectedStyle = _selectedStyle;
   }
 
   /**
@@ -47,5 +51,12 @@ export class BaseNode {
     const xInbounds = this.x - this.radius <= x && x < this.x + this.radius;
     const yInbounds = this.y - this.radius <= y && y < this.y + this.radius;
     return xInbounds && yInbounds;
+  }
+
+  /**
+   * Set selected
+   */
+  setSelected(isSelected: boolean): void {
+    this.isSelected = isSelected;
   }
 }
