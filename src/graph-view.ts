@@ -57,7 +57,7 @@ export class GraphView {
    * Handle mouseup event
    */
   private onUpGraphNode = (e: MouseEvent): void => {
-    if (this.selection === null) {
+    if (this.selection === null || this.selection.isSelected === false) {
       const node = new GraphNode(
         e.x,
         e.y,
@@ -67,12 +67,12 @@ export class GraphView {
         '#8aa',
         String(this.nodes.length),
       );
+      node.setSelected(true);
       this.addNode(node);
+      this.selection = node;
     }
-    if (this.selection !== null && this.selection.isSelected) {
-      this.selection.setSelected(false);
-      this.selection.draw(this.ctx);
-    }
+    this.selection.setSelected(false);
+    this.selection.draw(this.ctx);
   };
 
   /**
@@ -80,14 +80,13 @@ export class GraphView {
    */
   private onDownGraphNode = (e: MouseEvent): void => {
     const node = this.getNodeWithin(e.x, e.y);
-    if (this.selection === null) return;
-    if (this.selection.isSelected) this.selection.setSelected(false);
-
     if (node === null) return;
 
-    if (this.selection !== node) this.connectNode(this.selection, node);
-
-    this.selection = node;
+    if (this.selection !== null && this.selection !== node) {
+      this.connectNode(this.selection, node);
+    } else {
+      this.selection = node;
+    }
     this.selection.setSelected(true);
     this.selection.draw(this.ctx);
   };
@@ -96,7 +95,7 @@ export class GraphView {
    * Handle mousemove event
    */
   private onMoveGraphNode = (e: MouseEvent): void => {
-    if (this.selection === null || !this.selection.isSelected) return;
+    if (this.selection === null || this.selection.isSelected === false) return;
     this.selection.setPos(e.x, e.y);
     this.updateCanvas();
   };
