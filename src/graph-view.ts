@@ -145,7 +145,7 @@ export class GraphView {
   /**
    * Resize canvas
    */
-  private resizeCanvas(): void {
+  private resizeCanvas = (): void => {
     this.canvas.width = this.root.clientWidth;
     this.canvas.height = this.root.clientHeight;
   }
