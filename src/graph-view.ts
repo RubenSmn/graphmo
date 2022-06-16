@@ -54,6 +54,20 @@ export class GraphView {
   }
 
   /**
+   * Set selection
+   */
+  public set selection(node: BaseNode) {
+    this._selection = node;
+  }
+
+  /**
+   * Get selection
+   */
+  public get selection() {
+    return this._selection;
+  }
+
+  /**
    * Handle mouseup event
    */
   private onUpGraphNode = (e: MouseEvent): void => {
