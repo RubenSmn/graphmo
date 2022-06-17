@@ -1,2 +1,2 @@
-export { BaseInput } from './base-input';
-export { DefaultInput } from './default-input';
+export { BaseInputHandler } from './base-input-handler';
+export { DefaultInputHandler } from './default-input-handler';

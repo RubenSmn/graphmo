@@ -1,7 +1,7 @@
 import { GraphView } from 'graph-view';
-import { BaseInput } from './base-input';
+import { BaseInputHandler } from './base-input-handler';
 
-export class DefaultInput implements BaseInput {
+export class DefaultInputHandler implements BaseInputHandler {
   /**
    * Handle mouseup event
    */
