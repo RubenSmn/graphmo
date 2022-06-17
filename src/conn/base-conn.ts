@@ -6,6 +6,8 @@ export class BaseConn {
   protected _strokeStyle: string;
 
   constructor(nodeA: BaseNode, nodeB: BaseNode, strokeStyle: string) {
+    if (nodeA === nodeB)
+      throw new Error('Can not create a connection if nodes are equal');
     this._nodeA = nodeA;
     this._nodeB = nodeB;
     this._strokeStyle = strokeStyle;
