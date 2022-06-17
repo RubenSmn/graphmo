@@ -1,42 +1,7 @@
-import { BaseNode } from '../node';
-import { BaseConn } from '../conn';
+import { BaseState } from './base-state';
 
-export class GraphState {
-  private _nodes: BaseNode[];
-  private _conns: BaseConn[];
-  private _selection: BaseNode | null;
-
+export class GraphState extends BaseState {
   constructor() {
-    this._nodes = [];
-    this._conns = [];
-    this._selection = null;
-  }
-
-  /**
-   * Get nodes
-   */
-  public get nodes() {
-    return this._nodes;
-  }
-
-  /**
-   * Get conns
-   */
-  public get conns() {
-    return this._conns;
-  }
-
-  /**
-   * Get selection
-   */
-  public get selection() {
-    return this._selection;
-  }
-
-  /**
-   * Set selection
-   */
-  public set selection(node: BaseNode) {
-    this._selection = node;
+    super();
   }
 }
