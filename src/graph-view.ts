@@ -26,8 +26,7 @@ export class GraphView {
     this.root = config.parent;
 
     this.canvas = document.createElement('canvas');
-    this.canvas.width = this.root.clientWidth;
-    this.canvas.height = this.root.clientHeight;
+    this.resizeCanvas();
     this.ctx = this.canvas.getContext('2d');
 
     this.dom = document.createElement('div');
