@@ -4,8 +4,8 @@ export class BaseNode {
   radius: number;
   fillStyle: string;
   strokeStyle: string;
-  selectedStyle: string;
-  isSelected = false;
+  activeStyle: string;
+  _active = false;
 
   constructor(
     _x: number,
@@ -13,14 +13,14 @@ export class BaseNode {
     _radius: number,
     _fillStyle: string,
     _strokeStyle: string,
-    _selectedStyle: string,
+    _activeStyle: string,
   ) {
     this.x = _x;
     this.y = _y;
     this.radius = _radius;
     this.fillStyle = _fillStyle;
     this.strokeStyle = _strokeStyle;
-    this.selectedStyle = _selectedStyle;
+    this.activeStyle = _activeStyle;
   }
 
   /**
@@ -54,9 +54,16 @@ export class BaseNode {
   }
 
   /**
-   * Set selected
+   * Set active
    */
-  setSelected(isSelected: boolean): void {
-    this.isSelected = isSelected;
+  public get active() {
+    return this._active;
+  }
+
+  /**
+   * Set active
+   */
+  public set active(isActive: boolean) {
+    this._active = isActive;
   }
 }
