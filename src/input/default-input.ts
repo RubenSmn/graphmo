@@ -6,6 +6,7 @@ export class DefaultInput implements BaseInput {
    * Handle mouseup event
    */
   public onMouseUp = (_e: MouseEvent, view: GraphView): void => {
+    if (view.state.selection === null) return;
     view.state.selection.active = false;
     view.state.selection.draw(view.ctx);
     view.state.selection = null;
