@@ -9,16 +9,16 @@ export class GraphNode extends BaseNode {
     radius: number,
     fillStyle: string,
     strokeStyle: string,
-    selectedStyle: string,
+    activeStyle: string,
     text: string,
   ) {
-    super(x, y, radius, fillStyle, strokeStyle, selectedStyle);
+    super(x, y, radius, fillStyle, strokeStyle, activeStyle);
     this.text = text;
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
     ctx.beginPath();
-    ctx.fillStyle = this.isSelected ? this.selectedStyle : this.fillStyle;
+    ctx.fillStyle = this.active ? this.activeStyle : this.fillStyle;
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
     ctx.strokeStyle = this.strokeStyle;
     ctx.stroke();
