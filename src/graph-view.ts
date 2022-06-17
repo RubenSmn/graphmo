@@ -1,5 +1,6 @@
 import { BaseNode, GraphNode } from './node';
-import { BaseConn, LineConn } from './conn';
+import { LineConn } from './conn';
+import { GraphState } from './state/graph-state';
 
 /**
  * Interface for the GraphView config
@@ -16,9 +17,7 @@ export class GraphView {
   readonly root: Element;
   readonly dom: Element;
   readonly ctx: CanvasRenderingContext2D;
-  nodes: BaseNode[] = [];
-  conns: BaseConn[] = [];
-  private _selection: BaseNode;
+  readonly state: GraphState;
 
   constructor(config: GraphViewConfig) {
     this.root = config.parent;
@@ -37,7 +36,7 @@ export class GraphView {
     this.dom.addEventListener('mouseup', this.onUpGraphNode);
     this.dom.addEventListener('mousemove', this.onMoveGraphNode);
 
-    this._selection = null;
+    this.state = new GraphState();
 
     window.onresize = this.resizeCanvas;
   }
@@ -46,7 +45,7 @@ export class GraphView {
    * Add node to graph view
    */
   addNode(node: BaseNode): void {
-    this.nodes.push(node);
+    this.state.nodes.push(node);
     node.draw(this.ctx);
   }
 
@@ -55,29 +54,15 @@ export class GraphView {
    */
   connectNode(nodeA: BaseNode, nodeB: BaseNode): void {
     const conn = new LineConn(nodeA, nodeB, '#000'); // hardcoded for now
-    this.conns.push(conn);
+    this.state.conns.push(conn);
     this.updateCanvas();
-  }
-
-  /**
-   * Set selection
-   */
-  public set selection(node: BaseNode) {
-    this._selection = node;
-  }
-
-  /**
-   * Get selection
-   */
-  public get selection() {
-    return this._selection;
   }
 
   /**
    * Handle mouseup event
    */
   private onUpGraphNode = (e: MouseEvent): void => {
-    if (this._selection === null || this._selection.isSelected === false) {
+    if (this.state.selection === null || this.state.selection.isSelected === false) {
       const node = new GraphNode(
         e.x,
         e.y,
@@ -85,14 +70,14 @@ export class GraphView {
         '#2cc',
         '#099',
         '#8aa',
-        String(this.nodes.length),
+        String(this.state.nodes.length),
       );
       node.setSelected(true);
       this.addNode(node);
-      this._selection = node;
+      this.state.selection = node;
     }
-    this._selection.setSelected(false);
-    this._selection.draw(this.ctx);
+    this.state.selection.setSelected(false);
+    this.state.selection.draw(this.ctx);
   };
 
   /**
@@ -102,21 +87,21 @@ export class GraphView {
     const node = this.getNodeWithin(e.x, e.y);
     if (node === null) return;
 
-    if (this._selection !== null && this._selection !== node) {
-      this.connectNode(this._selection, node);
+    if (this.state.selection !== null && this.state.selection !== node) {
+      this.connectNode(this.state.selection, node);
     } else {
-      this._selection = node;
+      this.state.selection = node;
     }
-    this._selection.setSelected(true);
-    this._selection.draw(this.ctx);
+    this.state.selection.setSelected(true);
+    this.state.selection.draw(this.ctx);
   };
 
   /**
    * Handle mousemove event
    */
   private onMoveGraphNode = (e: MouseEvent): void => {
-    if (this._selection === null || this._selection.isSelected === false) return;
-    this._selection.setPos(e.x, e.y);
+    if (this.state.selection === null || this.state.selection.isSelected === false) return;
+    this.state.selection.setPos(e.x, e.y);
     this.updateCanvas();
   };
 
@@ -124,7 +109,7 @@ export class GraphView {
    * Return node where x,y are in bounds
    */
   private getNodeWithin(x: number, y: number): BaseNode | null {
-    for (const node of this.nodes) {
+    for (const node of this.state.nodes) {
       if (node.isInbounds(x, y)) return node;
     }
     return null;
@@ -140,7 +125,7 @@ export class GraphView {
    * Redraw nodes
    */
   private updateNodes(): void {
-    for (const node of this.nodes) {
+    for (const node of this.state.nodes) {
       node.draw(this.ctx);
     }
   }
@@ -149,7 +134,7 @@ export class GraphView {
    * Redraw nodes
    */
   private updateConns(): void {
-    for (const conn of this.conns) {
+    for (const conn of this.state.conns) {
       conn.draw(this.ctx);
     }
   }
