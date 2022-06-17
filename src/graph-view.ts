@@ -1,7 +1,7 @@
 import { BaseNode } from './node';
 import { LineConn } from './conn';
-import { GraphState } from './state/graph-state';
-import { BaseInput } from './input/base-input';
+import { GraphState, DefaultState } from './state';
+import { BaseInput } from './input';
 
 /**
  * Interface for the GraphView config
@@ -35,7 +35,7 @@ export class GraphView {
 
     config.parent.appendChild(this.dom);
 
-    this.state = new GraphState();
+    this.state = new DefaultState();
     this.inputHandler = config.handler;
 
     this.dom.addEventListener(
@@ -47,6 +47,8 @@ export class GraphView {
     this.dom.addEventListener(
       'mousemove', (e: MouseEvent) => this.inputHandler.onMouseMove(e, this)
     );
+
+    this.updateCanvas();
 
     window.onresize = this.resizeCanvas;
   }
