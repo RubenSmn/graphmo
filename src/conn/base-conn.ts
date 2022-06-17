@@ -1,24 +1,32 @@
 import { BaseNode } from '../node';
 
 export class BaseConn {
-  nodeA: BaseNode;
-  nodeB: BaseNode;
-  strokeStyle: string;
+  protected _nodeA: BaseNode;
+  protected _nodeB: BaseNode;
+  protected _strokeStyle: string;
 
-  constructor(_nodeA: BaseNode, _nodeB: BaseNode, _strokeStyle: string) {
-    this.nodeA = _nodeA;
-    this.nodeB = _nodeB;
-    this.strokeStyle = _strokeStyle;
+  constructor(nodeA: BaseNode, nodeB: BaseNode, strokeStyle: string) {
+    this._nodeA = nodeA;
+    this._nodeB = nodeB;
+    this._strokeStyle = strokeStyle;
   }
 
   /**
    * Draw a line on the canvas
    */
-  draw(ctx: CanvasRenderingContext2D): void {
+  public draw(ctx: CanvasRenderingContext2D): void {
     ctx.beginPath();
-    ctx.strokeStyle = this.strokeStyle;
-    ctx.moveTo(this.nodeA.x, this.nodeA.y);
-    ctx.lineTo(this.nodeB.x, this.nodeB.y);
+    ctx.strokeStyle = this._strokeStyle;
+    ctx.moveTo(this._nodeA.x, this._nodeA.y);
+    ctx.lineTo(this._nodeB.x, this._nodeB.y);
     ctx.stroke();
+  }
+
+  public get nodeA() {
+    return this._nodeA;
+  }
+
+  public get nodeB() {
+    return this._nodeB;
   }
 }

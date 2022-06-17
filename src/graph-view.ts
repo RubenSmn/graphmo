@@ -64,7 +64,6 @@ export class GraphView {
    * Connect two nodes with a connection
    */
   public connectNode(nodeA: BaseNode, nodeB: BaseNode): void {
-    if (nodeA === nodeB) return;
     if (this.state.conns.find(conn => conn.nodeA === nodeA && conn.nodeB === nodeB)) return;
     const conn = new LineConn(nodeA, nodeB, '#000'); // hardcoded for now
     this.state.conns.push(conn);
