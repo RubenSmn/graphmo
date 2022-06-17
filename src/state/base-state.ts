@@ -13,6 +13,15 @@ export class BaseState {
   }
 
   /**
+   * Check if elm exists in state
+   */
+  public has(elm: BaseNode | BaseConn): boolean {
+    if (elm instanceof BaseNode) return this._nodes.indexOf(elm) > -1;
+    if (elm instanceof BaseConn) return this._conns.indexOf(elm) > -1;
+    return false;
+  }
+
+  /**
    * Get nodes
    */
   public get nodes() {
