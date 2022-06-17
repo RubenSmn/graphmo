@@ -64,6 +64,8 @@ export class GraphView {
    * Connect two nodes with a connection
    */
   public connectNode(nodeA: BaseNode, nodeB: BaseNode): void {
+    if (this.state.nodes.indexOf(nodeA) < 0 || this.state.nodes.indexOf(nodeB) < 0)
+      throw new Error("Node does not exists in the current state");
     if (this.state.conns.find(conn => conn.nodeA === nodeA && conn.nodeB === nodeB)) return;
     const conn = new LineConn(nodeA, nodeB, '#000'); // hardcoded for now
     this.state.conns.push(conn);
