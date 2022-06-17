@@ -53,6 +53,7 @@ export class GraphView {
    * Connect two nodes with a connection
    */
   connectNode(nodeA: BaseNode, nodeB: BaseNode): void {
+    if (nodeA === nodeB) return;
     const conn = new LineConn(nodeA, nodeB, '#000'); // hardcoded for now
     this.state.conns.push(conn);
     this.updateCanvas();
@@ -87,7 +88,7 @@ export class GraphView {
     const node = this.getNodeWithin(e.x, e.y);
     if (node === null) return;
 
-    if (this.state.selection !== null && this.state.selection !== node) {
+    if (this.state.selection !== null) {
       this.connectNode(this.state.selection, node);
     } else {
       this.state.selection = node;
