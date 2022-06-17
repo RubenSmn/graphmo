@@ -1,12 +1,14 @@
-import { BaseNode, GraphNode } from './node';
+import { BaseNode } from './node';
 import { LineConn } from './conn';
 import { GraphState } from './state/graph-state';
+import { BaseInput } from './input/base-input';
 
 /**
  * Interface for the GraphView config
  */
 export interface GraphViewConfig {
   parent: Element;
+  handler: BaseInput;
 }
 
 /**
@@ -18,6 +20,7 @@ export class GraphView {
   readonly dom: Element;
   readonly ctx: CanvasRenderingContext2D;
   readonly state: GraphState;
+  readonly inputHandler: BaseInput;
 
   constructor(config: GraphViewConfig) {
     this.root = config.parent;
@@ -32,11 +35,18 @@ export class GraphView {
 
     config.parent.appendChild(this.dom);
 
-    this.dom.addEventListener('mousedown', this.onDownGraphNode);
-    this.dom.addEventListener('mouseup', this.onUpGraphNode);
-    this.dom.addEventListener('mousemove', this.onMoveGraphNode);
-
     this.state = new GraphState();
+    this.inputHandler = config.handler;
+
+    this.dom.addEventListener(
+      'mousedown', (e: MouseEvent) => this.inputHandler.onMouseDown(e, this)
+    );
+    this.dom.addEventListener(
+      'mouseup', (e: MouseEvent) => this.inputHandler.onMouseUp(e, this)
+    );
+    this.dom.addEventListener(
+      'mousemove', (e: MouseEvent) => this.inputHandler.onMouseMove(e, this)
+    );
 
     window.onresize = this.resizeCanvas;
   }
@@ -44,7 +54,7 @@ export class GraphView {
   /**
    * Add node to graph view
    */
-  addNode(node: BaseNode): void {
+  public addNode(node: BaseNode): void {
     this.state.nodes.push(node);
     node.draw(this.ctx);
   }
@@ -52,7 +62,7 @@ export class GraphView {
   /**
    * Connect two nodes with a connection
    */
-  connectNode(nodeA: BaseNode, nodeB: BaseNode): void {
+  public connectNode(nodeA: BaseNode, nodeB: BaseNode): void {
     if (nodeA === nodeB) return;
     if (this.state.conns.find(conn => conn.nodeA === nodeA && conn.nodeB === nodeB)) return;
     const conn = new LineConn(nodeA, nodeB, '#000'); // hardcoded for now
@@ -61,63 +71,16 @@ export class GraphView {
   }
 
   /**
-   * Handle mouseup event
-   */
-  private onUpGraphNode = (e: MouseEvent): void => {
-    if (this.state.selection === null || this.state.selection.active === false) {
-      const node = new GraphNode(
-        e.x,
-        e.y,
-        24,
-        '#2cc',
-        '#099',
-        '#8aa',
-        String(this.state.nodes.length),
-      );
-      node.active = true;
-      this.addNode(node);
-      this.state.selection = node;
-    }
-    this.state.selection.active = false;
-    this.state.selection.draw(this.ctx);
-  };
-
-  /**
-   * Handle mousedown event
-   */
-  private onDownGraphNode = (e: MouseEvent): void => {
-    const node = this.getNodeWithin(e.x, e.y);
-    if (node === null) return;
-
-    if (this.state.selection !== null) {
-      this.connectNode(this.state.selection, node);
-    } else {
-      this.state.selection = node;
-    }
-    this.state.selection.active = true;
-    this.state.selection.draw(this.ctx);
-  };
-
-  /**
-   * Handle mousemove event
-   */
-  private onMoveGraphNode = (e: MouseEvent): void => {
-    if (this.state.selection === null || this.state.selection.active === false) return;
-    this.state.selection.setPos(e.x, e.y);
-    this.updateCanvas();
-  };
-
-  /**
    * Return node where x,y are in bounds
    */
-  private getNodeWithin(x: number, y: number): BaseNode | null {
+  public getNodeWithin(x: number, y: number): BaseNode | null {
     for (const node of this.state.nodes) {
       if (node.isInbounds(x, y)) return node;
     }
     return null;
   }
 
-  private updateCanvas(): void {
+  public updateCanvas(): void {
     this.cleanCanvas();
     this.updateConns();
     this.updateNodes();
