@@ -2,9 +2,9 @@ import { BaseNode } from '../node';
 import { BaseConn } from '../conn';
 
 export class GraphState {
-  private _nodes: BaseNode[];
-  private _conns: BaseConn[];
-  private _selection: BaseNode | null;
+  protected _nodes: BaseNode[];
+  protected _conns: BaseConn[];
+  protected _selection: BaseNode | null;
 
   constructor() {
     this._nodes = [];
