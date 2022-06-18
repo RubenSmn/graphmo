@@ -26,7 +26,6 @@ export class GraphView {
     this.root = config.parent;
 
     this.canvas = document.createElement('canvas');
-    this.resizeCanvas();
     this.ctx = this.canvas.getContext('2d');
 
     this.dom = document.createElement('div');
@@ -47,7 +46,7 @@ export class GraphView {
       'mousemove', (e: MouseEvent) => this.inputHandler.onMouseMove(e, this)
     );
 
-    this.updateCanvas();
+    this.resizeCanvas();
 
     window.onresize = this.resizeCanvas;
   }
@@ -119,5 +118,6 @@ export class GraphView {
   private resizeCanvas = (): void => {
     this.canvas.width = this.root.clientWidth;
     this.canvas.height = this.root.clientHeight;
+    this.updateCanvas();
   }
 }
