@@ -22,6 +22,17 @@ export class BaseState {
   }
 
   /**
+   * Update every node pos by x,y
+   */
+  public addOffsetToNodes(x: number, y: number): void {
+    for (const node of this._nodes) {
+      const newX = node.x + x;
+      const newY = node.y + y;
+      node.setPos(newX, newY);
+    }
+  }
+
+  /**
    * Get nodes
    */
   public get nodes() {
