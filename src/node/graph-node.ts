@@ -6,11 +6,11 @@ export class GraphNode extends BaseNode {
   constructor(
     x: number,
     y: number,
-    radius: number,
-    fillStyle: string,
-    strokeStyle: string,
-    activeStyle: string,
-    text: string,
+    radius?: number,
+    fillStyle?: string,
+    strokeStyle?: string,
+    activeStyle?: string,
+    text?: string,
   ) {
     super(x, y, radius, fillStyle, strokeStyle, activeStyle);
     this.text = text;
