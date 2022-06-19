@@ -8,15 +8,15 @@ export class GraphNode extends BaseNode {
   protected _text: string;
 
   constructor({
-      x,
-      y,
-      radius,
-      fillStyle,
-      strokeStyle,
-      activeStyle,
-      active,
-      text = '',
-    }: GraphNodeConfig) {
+    x,
+    y,
+    radius,
+    fillStyle,
+    strokeStyle,
+    activeStyle,
+    active,
+    text = '',
+  }: GraphNodeConfig) {
     super({ x, y, radius, fillStyle, strokeStyle, activeStyle, active });
     this._text = text;
   }
