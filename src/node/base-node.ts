@@ -1,26 +1,38 @@
-export class BaseNode {
+export interface BaseNodeConfig {
   x: number;
   y: number;
-  radius: number;
-  fillStyle: string;
-  strokeStyle: string;
-  activeStyle: string;
-  _active = false;
+  radius?: number;
+  fillStyle?: string;
+  strokeStyle?: string;
+  activeStyle?: string;
+  active?: boolean;
+}
 
-  constructor(
-    _x: number,
-    _y: number,
-    _radius: number = 24,
-    _fillStyle: string = '#66cad4',
-    _strokeStyle: string = '#000',
-    _activeStyle: string = '#3ed7e7',
-  ) {
-    this.x = _x;
-    this.y = _y;
-    this.radius = _radius;
-    this.fillStyle = _fillStyle;
-    this.strokeStyle = _strokeStyle;
-    this.activeStyle = _activeStyle;
+export class BaseNode {
+  protected _x: number;
+  protected _y: number;
+  protected _radius: number;
+  protected _fillStyle: string;
+  protected _strokeStyle: string;
+  protected _activeStyle: string;
+  protected _active: boolean;
+
+  constructor({
+    x,
+    y,
+    radius = 24,
+    fillStyle = '#66ca4d',
+    strokeStyle = '#000',
+    activeStyle = '#3ed7e7',
+    active = false,
+  }: BaseNodeConfig) {
+    this._x = x;
+    this._y = y;
+    this._radius = radius;
+    this._fillStyle = fillStyle;
+    this._strokeStyle = strokeStyle;
+    this._activeStyle = activeStyle;
+    this._active = active;
   }
 
   /**
@@ -28,9 +40,9 @@ export class BaseNode {
    */
   draw(ctx: CanvasRenderingContext2D): void {
     ctx.beginPath();
-    ctx.fillStyle = this.fillStyle;
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
-    ctx.strokeStyle = this.strokeStyle;
+    ctx.fillStyle = this._fillStyle;
+    ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2, true);
+    ctx.strokeStyle = this._strokeStyle;
     ctx.stroke();
     ctx.fill();
     ctx.closePath();
@@ -40,21 +52,35 @@ export class BaseNode {
    * Set a new position
    */
   setPos(x: number, y: number): void {
-    this.x = x;
-    this.y = y;
+    this._x = x;
+    this._y = y;
   }
 
   /**
    * Check if x,y is in the radius of the node
    */
   isInbounds(x: number, y: number): boolean {
-    const xInbounds = this.x - this.radius <= x && x < this.x + this.radius;
-    const yInbounds = this.y - this.radius <= y && y < this.y + this.radius;
+    const xInbounds = this._x - this._radius <= x && x < this._x + this._radius;
+    const yInbounds = this._y - this._radius <= y && y < this._y + this._radius;
     return xInbounds && yInbounds;
   }
 
   /**
-   * Set active
+   * Get y
+   */
+  public get y() {
+    return this._y;
+  }
+
+  /**
+   * Get x
+   */
+  public get x() {
+    return this._x;
+  }
+
+  /**
+   * Get active
    */
   public get active() {
     return this._active;

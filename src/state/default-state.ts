@@ -6,14 +6,11 @@ export class DefaultState extends GraphState {
   constructor() {
     super();
     for (let i = 0; i < 5; i++) {
-      const node = new GraphNode(
-        Math.floor(Math.random() * (700 - 30 + 1) + 30),
-        Math.floor(Math.random() * (300 - 30 + 1) + 30),
-        24,
-        '#66cad4',
-        '#000',
-        '#a6ccd1',
-        String(i),
+      const node = new GraphNode({
+        x: Math.floor(Math.random() * (700 - 30 + 1) + 30),
+        y: Math.floor(Math.random() * (300 - 30 + 1) + 30),
+        text: String(i),
+      }
       );
       this._nodes.push(node);
     }

@@ -1,26 +1,31 @@
-import { BaseNode } from './base-node';
+import { BaseNode, BaseNodeConfig } from './base-node';
+
+export interface GraphNodeConfig extends BaseNodeConfig {
+  text?: string;
+}
 
 export class GraphNode extends BaseNode {
-  text: string;
+  protected _text: string;
 
-  constructor(
-    x: number,
-    y: number,
-    radius?: number,
-    fillStyle?: string,
-    strokeStyle?: string,
-    activeStyle?: string,
-    text?: string,
-  ) {
-    super(x, y, radius, fillStyle, strokeStyle, activeStyle);
-    this.text = text;
+  constructor({
+      x,
+      y,
+      radius,
+      fillStyle,
+      strokeStyle,
+      activeStyle,
+      active,
+      text = '',
+    }: GraphNodeConfig) {
+    super({ x, y, radius, fillStyle, strokeStyle, activeStyle, active });
+    this._text = text;
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
     ctx.beginPath();
-    ctx.fillStyle = this.active ? this.activeStyle : this.fillStyle;
-    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
-    ctx.strokeStyle = this.strokeStyle;
+    ctx.fillStyle = this._active ? this._activeStyle : this._fillStyle;
+    ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2, true);
+    ctx.strokeStyle = this._strokeStyle;
     ctx.stroke();
     ctx.fill();
     ctx.closePath();
@@ -28,6 +33,6 @@ export class GraphNode extends BaseNode {
     ctx.font = '12px Arial';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(this.text, this.x, this.y);
+    ctx.fillText(this._text, this._x, this._y);
   }
 }
