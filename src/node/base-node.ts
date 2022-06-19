@@ -10,10 +10,10 @@ export class BaseNode {
   constructor(
     _x: number,
     _y: number,
-    _radius: number,
-    _fillStyle: string,
-    _strokeStyle: string,
-    _activeStyle: string,
+    _radius: number = 24,
+    _fillStyle: string = '#66cad4',
+    _strokeStyle: string = '#000',
+    _activeStyle: string = '#3ed7e7',
   ) {
     this.x = _x;
     this.y = _y;
