@@ -2,8 +2,8 @@ import { BaseNode } from '../node';
 import { BaseConn } from '../conn';
 
 export interface BaseStateConfig {
-  nodes: BaseNode[];
-  conns: BaseConn[];
+  nodes?: BaseNode[];
+  conns?: BaseConn[];
 }
 
 export class BaseState {
