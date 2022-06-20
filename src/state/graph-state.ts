@@ -13,8 +13,10 @@ export class GraphState extends BaseState {
    * Create state from graph
    *
    * @param graph the graph used to create the state
+   *
+   * @returns GraphState
    */
-  public static fromGraph(graph: { [key: string]: string[] }) {
+  public static fromGraph(graph: { [key: string]: string[] }): GraphState {
     const nodes = [];
     const conns = [];
 
@@ -31,6 +33,6 @@ export class GraphState extends BaseState {
       }
     }
 
-    return { nodes, conns };
+    return new GraphState({ nodes, conns });
   }
 }
