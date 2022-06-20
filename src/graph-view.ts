@@ -1,14 +1,15 @@
 import { BaseNode } from './node';
 import { LineConn } from './conn';
 import { BaseState, DefaultState } from './state';
-import { BaseInputHandler } from './input';
+import { BaseInputHandler, DefaultInputHandler } from './input';
 
 /**
  * Interface for the GraphView config
  */
 export interface GraphViewConfig {
   parent: Element;
-  handler: BaseInputHandler;
+  handler?: BaseInputHandler;
+  state?: BaseState;
 }
 
 /**
@@ -33,8 +34,8 @@ export class GraphView {
 
     config.parent.appendChild(this.dom);
 
-    this.state = new DefaultState();
-    this.inputHandler = config.handler;
+    this.state = config.state ? config.state : new DefaultState();
+    this.inputHandler = config.handler ? config.handler : new DefaultInputHandler;
 
     this.dom.addEventListener(
       'mousedown', (e: MouseEvent) => this.inputHandler.onMouseDown(e, this)
