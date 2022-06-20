@@ -1,10 +1,12 @@
 import { graphToNodeHash } from '../util';
-import { BaseState } from './base-state';
+import { BaseState, BaseStateConfig } from './base-state';
 import { LineConn } from '../conn';
 
+export interface GraphStateConfig extends BaseStateConfig {};
+
 export class GraphState extends BaseState {
-  constructor() {
-    super();
+  constructor({ nodes, conns }: GraphStateConfig) {
+    super({ nodes, conns });
   }
 
   /**
