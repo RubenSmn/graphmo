@@ -37,6 +37,8 @@ export class BaseNode {
 
   /**
    * Draw a cirlce on the canvas
+   *
+   * @param ctx the canvas context
    */
   public draw(ctx: CanvasRenderingContext2D): void {
     ctx.beginPath();
