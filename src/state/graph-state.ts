@@ -33,4 +33,23 @@ export class GraphState extends BaseState {
 
     return new GraphState({ nodes, conns });
   }
+
+  /**
+   * Create state from edges
+   *
+   * @param edges the edges used to create the state
+   *
+   * @returns GraphState
+   */
+  public static fromEdges(edges: string[][]): GraphState {
+    const graph = {};
+    for (const nodes of edges) {
+      const [a, b] = nodes;
+      if (!(a in graph)) graph[a] = [];
+      if (!(b in graph)) graph[b] = [];
+      graph[a].push(b);
+      graph[b].push(a);
+    }
+    return this.fromGraph(graph);
+  }
 }
