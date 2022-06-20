@@ -98,7 +98,7 @@ export class GraphView {
   }
 
   /**
-   * Redraw nodes
+   * Redraw conns
    */
   private updateConns(): void {
     for (const conn of this.state.conns) {
