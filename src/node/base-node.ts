@@ -38,7 +38,7 @@ export class BaseNode {
   /**
    * Draw a cirlce on the canvas
    */
-  draw(ctx: CanvasRenderingContext2D): void {
+  public draw(ctx: CanvasRenderingContext2D): void {
     ctx.beginPath();
     ctx.fillStyle = this._fillStyle;
     ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2, true);
@@ -51,7 +51,7 @@ export class BaseNode {
   /**
    * Set a new position
    */
-  setPos(x: number, y: number): void {
+  public setPos(x: number, y: number): void {
     this._x = x;
     this._y = y;
   }
@@ -59,7 +59,7 @@ export class BaseNode {
   /**
    * Check if x,y is in the radius of the node
    */
-  isInbounds(x: number, y: number): boolean {
+  public isInbounds(x: number, y: number): boolean {
     const xInbounds = this._x - this._radius <= x && x < this._x + this._radius;
     const yInbounds = this._y - this._radius <= y && y < this._y + this._radius;
     return xInbounds && yInbounds;

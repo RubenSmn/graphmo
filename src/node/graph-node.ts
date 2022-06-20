@@ -21,7 +21,7 @@ export class GraphNode extends BaseNode {
     this._text = text;
   }
 
-  draw(ctx: CanvasRenderingContext2D): void {
+  public draw(ctx: CanvasRenderingContext2D): void {
     ctx.beginPath();
     ctx.fillStyle = this._active ? this._activeStyle : this._fillStyle;
     ctx.arc(this._x, this._y, this._radius, 0, Math.PI * 2, true);
