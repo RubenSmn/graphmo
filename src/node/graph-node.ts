@@ -35,4 +35,8 @@ export class GraphNode extends BaseNode {
     ctx.textBaseline = 'middle';
     ctx.fillText(this._text, this._x, this._y);
   }
+
+  public get text() {
+    return this._text;
+  }
 }
