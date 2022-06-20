@@ -21,6 +21,11 @@ export class GraphNode extends BaseNode {
     this._text = text;
   }
 
+  /**
+   * Draw a cirlce on the canvas with corresponding text
+   *
+   * @param ctx the canvas context
+   */
   public draw(ctx: CanvasRenderingContext2D): void {
     ctx.beginPath();
     ctx.fillStyle = this._active ? this._activeStyle : this._fillStyle;
@@ -36,6 +41,9 @@ export class GraphNode extends BaseNode {
     ctx.fillText(this._text, this._x, this._y);
   }
 
+  /**
+   * Get text
+   */
   public get text() {
     return this._text;
   }
