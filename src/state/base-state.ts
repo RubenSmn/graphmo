@@ -1,14 +1,19 @@
 import { BaseNode } from '../node';
 import { BaseConn } from '../conn';
 
+export interface BaseStateConfig {
+  nodes: BaseNode[];
+  conns: BaseConn[];
+}
+
 export class BaseState {
   protected _nodes: BaseNode[];
   protected _conns: BaseConn[];
   protected _selection: BaseNode | null;
 
-  constructor() {
-    this._nodes = [];
-    this._conns = [];
+  constructor({ nodes = [], conns = [] }: BaseStateConfig) {
+    this._nodes = nodes;
+    this._conns = conns;
     this._selection = null;
   }
 
