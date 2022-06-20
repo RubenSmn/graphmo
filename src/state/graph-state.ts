@@ -1,4 +1,6 @@
+import { graphToNodeHash } from '../util';
 import { BaseState } from './base-state';
+import { LineConn } from '../conn';
 
 export class GraphState extends BaseState {
   constructor() {
@@ -7,20 +9,22 @@ export class GraphState extends BaseState {
 
   /**
    * Create state from graph
+   *
+   * @param graph the graph used to create the state
    */
   public static fromGraph(graph: { [key: string]: string[] }) {
     const nodes = [];
     const conns = [];
 
+    const nodeHash = graphToNodeHash(graph);
+
     for (const key in graph) {
-      nodes.push(key);
-      for (const neighbor of graph[key]) {
-        const conn = key + ',' + neighbor;
-        if (
-          conns.indexOf(conn) > -1 ||
-          conns.indexOf(neighbor + ',' + key) > -1
-        )
-          continue;
+      const node = nodeHash[key];
+      nodes.push(node);
+
+      for (const neighborKey of graph[key]) {
+        const neighbor = nodeHash[neighborKey];
+        const conn = new LineConn(node, neighbor, '#000');
         conns.push(conn);
       }
     }
