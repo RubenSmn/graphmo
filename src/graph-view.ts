@@ -72,7 +72,10 @@ export class GraphView {
     if (!this.state.has(nodeA) || !this.state.has(nodeB))
       throw new Error("Node does not exists in the current state");
     if (this.state.conns.find(conn => conn.nodeA === nodeA && conn.nodeB === nodeB)) return;
-    const conn = new GraphConn(nodeA, nodeB, '#000'); // hardcoded for now
+    const conn = new GraphConn({
+      nodeA: nodeA,
+      nodeB: nodeB,
+    }); // hardcoded for now
     this.state.conns.push(conn);
     this.updateCanvas();
   }

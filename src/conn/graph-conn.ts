@@ -1,11 +1,17 @@
 import { GraphNode } from '../node';
 
+export class GraphConnConfig {
+  nodeA: GraphNode;
+  nodeB: GraphNode;
+  strokeStyle?: string;
+}
+
 export class GraphConn {
   protected _nodeA: GraphNode;
   protected _nodeB: GraphNode;
   protected _strokeStyle: string;
 
-  constructor(nodeA: GraphNode, nodeB: GraphNode, strokeStyle: string) {
+  constructor({ nodeA, nodeB, strokeStyle = '#000' }: GraphConnConfig) {
     if (nodeA === nodeB)
       throw new Error('Can not create a connection if nodes are equal');
     this._nodeA = nodeA;

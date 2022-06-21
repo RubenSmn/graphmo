@@ -62,7 +62,10 @@ export class GraphState {
 
       for (const neighborKey of graph[key]) {
         const neighbor = nodeHash[neighborKey];
-        const conn = new GraphConn(node, neighbor, '#000');
+        const conn = new GraphConn({
+          nodeA: node,
+          nodeB: neighbor,
+        });
         conns.push(conn);
       }
     }

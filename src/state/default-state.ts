@@ -13,9 +13,30 @@ export class DefaultState extends GraphState {
       });
       this._nodes.push(node);
     }
-    this._conns.push(new GraphConn(this._nodes[0], this._nodes[1], '#000'));
-    this._conns.push(new GraphConn(this._nodes[0], this._nodes[4], '#000'));
-    this._conns.push(new GraphConn(this._nodes[1], this._nodes[4], '#000'));
-    this._conns.push(new CurveConn(this._nodes[2], this._nodes[3], '#000'));
+
+    this._conns.push(
+      new GraphConn({
+        nodeA: this._nodes[0],
+        nodeB: this._nodes[1],
+      }),
+    );
+    this._conns.push(
+      new GraphConn({
+        nodeA: this._nodes[0],
+        nodeB: this._nodes[4],
+      }),
+    );
+    this._conns.push(
+      new GraphConn({
+        nodeA: this._nodes[1],
+        nodeB: this._nodes[4],
+      }),
+    );
+    this._conns.push(
+      new CurveConn({
+        nodeA: this._nodes[2],
+        nodeB: this._nodes[3],
+      }),
+    );
   }
 }
