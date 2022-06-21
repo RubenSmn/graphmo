@@ -82,6 +82,9 @@ export class GraphView {
     return null;
   }
 
+  /**
+   * Update canvas
+   */
   public updateCanvas(): void {
     this.cleanCanvas();
     this.updateConns();
