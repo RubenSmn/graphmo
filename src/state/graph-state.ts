@@ -1,10 +1,41 @@
 import { graphToNodeHash } from '../util';
-import { BaseState, BaseStateConfig } from './base-state';
+import { GraphNode } from '../node';
 import { GraphConn } from '../conn';
 
-export class GraphState extends BaseState {
-  constructor({ nodes, conns }: BaseStateConfig) {
-    super({ nodes, conns });
+export interface GraphStateConfig {
+  nodes?: GraphNode[];
+  conns?: GraphConn[];
+}
+
+export class GraphState {
+  protected _nodes: GraphNode[];
+  protected _conns: GraphConn[];
+  protected _selection: GraphNode | null;
+
+  constructor({ nodes = [], conns = [] }: GraphStateConfig) {
+    this._nodes = nodes;
+    this._conns = conns;
+    this._selection = null;
+  }
+
+  /**
+   * Check if elm exists in state
+   */
+  public has(elm: GraphNode | GraphConn): boolean {
+    if (elm instanceof GraphNode) return this._nodes.indexOf(elm) > -1;
+    if (elm instanceof GraphConn) return this._conns.indexOf(elm) > -1;
+    return false;
+  }
+
+  /**
+   * Update every node pos by x,y
+   */
+  public addOffsetToNodes(x: number, y: number): void {
+    for (const node of this._nodes) {
+      const newX = node.x + x;
+      const newY = node.y + y;
+      node.setPos(newX, newY);
+    }
   }
 
   /**
@@ -51,5 +82,33 @@ export class GraphState extends BaseState {
       graph[b].push(a);
     }
     return this.fromGraph(graph);
+  }
+
+  /**
+   * Get nodes
+   */
+  public get nodes() {
+    return this._nodes;
+  }
+
+  /**
+   * Get conns
+   */
+  public get conns() {
+    return this._conns;
+  }
+
+  /**
+   * Get selection
+   */
+  public get selection() {
+    return this._selection;
+  }
+
+  /**
+   * Set selection
+   */
+  public set selection(node: GraphNode) {
+    this._selection = node;
   }
 }
