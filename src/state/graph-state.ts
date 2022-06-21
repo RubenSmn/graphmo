@@ -20,6 +20,8 @@ export class GraphState {
 
   /**
    * Check if elm exists in state
+   *
+   * @param elm - element to check
    */
   public has(elm: GraphNode | GraphConn): boolean {
     if (elm instanceof GraphNode) return this._nodes.indexOf(elm) > -1;
@@ -29,6 +31,9 @@ export class GraphState {
 
   /**
    * Update every node pos by x,y
+   *
+   * @param x - value that moves nodes over the x axis
+   * @param y - value that moves nodes over the y axis
    */
   public addOffsetToNodes(x: number, y: number): void {
     for (const node of this._nodes) {
@@ -41,7 +46,7 @@ export class GraphState {
   /**
    * Create state from graph
    *
-   * @param graph the graph used to create the state
+   * @param graph - the graph used to create the state
    *
    * @returns GraphState
    */
@@ -68,7 +73,7 @@ export class GraphState {
   /**
    * Create state from edges
    *
-   * @param edges the edges used to create the state
+   * @param edges - the edges used to create the state
    *
    * @returns GraphState
    */
