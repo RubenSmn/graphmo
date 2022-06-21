@@ -1,7 +1,7 @@
 import { GraphView } from 'graph-view';
-import { BaseInputHandler } from './base-input-handler';
+import { GraphInputHandler } from './graph-input-handler';
 
-export class DefaultInputHandler implements BaseInputHandler {
+export class DefaultInputHandler implements GraphInputHandler {
   private _isMouseDown = false;
 
   /**

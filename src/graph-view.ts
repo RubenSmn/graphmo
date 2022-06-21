@@ -1,14 +1,14 @@
 import { GraphNode } from './node';
 import { GraphConn } from './conn';
 import { GraphState, DefaultState } from './state';
-import { BaseInputHandler, DefaultInputHandler } from './input';
+import { GraphInputHandler, DefaultInputHandler } from './input';
 
 /**
  * Interface for the GraphView config
  */
 export interface GraphViewConfig {
   parent: Element;
-  handler?: BaseInputHandler;
+  handler?: GraphInputHandler;
   state?: GraphState;
 }
 
@@ -21,7 +21,7 @@ export class GraphView {
   readonly dom: Element;
   readonly ctx: CanvasRenderingContext2D;
   readonly state: GraphState;
-  readonly inputHandler: BaseInputHandler;
+  readonly inputHandler: GraphInputHandler;
 
   constructor(config: GraphViewConfig) {
     this.root = config.parent;
