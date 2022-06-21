@@ -1,6 +1,6 @@
 import { graphToNodeHash } from '../util';
 import { BaseState, BaseStateConfig } from './base-state';
-import { LineConn } from '../conn';
+import { GraphConn } from '../conn';
 
 export class GraphState extends BaseState {
   constructor({ nodes, conns }: BaseStateConfig) {
@@ -26,7 +26,7 @@ export class GraphState extends BaseState {
 
       for (const neighborKey of graph[key]) {
         const neighbor = nodeHash[neighborKey];
-        const conn = new LineConn(node, neighbor, '#000');
+        const conn = new GraphConn(node, neighbor, '#000');
         conns.push(conn);
       }
     }

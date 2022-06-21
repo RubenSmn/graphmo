@@ -1,6 +1,6 @@
 import { GraphNode } from '../node';
 
-export class BaseConn {
+export class GraphConn {
   protected _nodeA: GraphNode;
   protected _nodeB: GraphNode;
   protected _strokeStyle: string;
