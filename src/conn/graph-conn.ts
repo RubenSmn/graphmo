@@ -1,11 +1,11 @@
-import { BaseNode } from '../node';
+import { GraphNode } from '../node';
 
-export class BaseConn {
-  protected _nodeA: BaseNode;
-  protected _nodeB: BaseNode;
+export class GraphConn {
+  protected _nodeA: GraphNode;
+  protected _nodeB: GraphNode;
   protected _strokeStyle: string;
 
-  constructor(nodeA: BaseNode, nodeB: BaseNode, strokeStyle: string) {
+  constructor(nodeA: GraphNode, nodeB: GraphNode, strokeStyle: string) {
     if (nodeA === nodeB)
       throw new Error('Can not create a connection if nodes are equal');
     this._nodeA = nodeA;

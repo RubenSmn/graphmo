@@ -1,15 +1,15 @@
-import { BaseNode } from './node';
-import { LineConn } from './conn';
-import { BaseState, DefaultState } from './state';
-import { BaseInputHandler, DefaultInputHandler } from './input';
+import { GraphNode } from './node';
+import { GraphConn } from './conn';
+import { GraphState, DefaultState } from './state';
+import { GraphInputHandler, DefaultInputHandler } from './input';
 
 /**
  * Interface for the GraphView config
  */
 export interface GraphViewConfig {
   parent: Element;
-  handler?: BaseInputHandler;
-  state?: BaseState;
+  handler?: GraphInputHandler;
+  state?: GraphState;
 }
 
 /**
@@ -20,8 +20,8 @@ export class GraphView {
   readonly root: Element;
   readonly dom: Element;
   readonly ctx: CanvasRenderingContext2D;
-  readonly state: BaseState;
-  readonly inputHandler: BaseInputHandler;
+  readonly state: GraphState;
+  readonly inputHandler: GraphInputHandler;
 
   constructor(config: GraphViewConfig) {
     this.root = config.parent;
@@ -54,28 +54,36 @@ export class GraphView {
 
   /**
    * Add node to graph view
+   *
+   * @param node - node to add to view state
    */
-  public addNode(node: BaseNode): void {
+  public addNode(node: GraphNode): void {
     this.state.nodes.push(node);
     node.draw(this.ctx);
   }
 
   /**
    * Connect two nodes with a connection
+   *
+   * @param nodeA - first node
+   * @param nodeB - second node
    */
-  public connectNode(nodeA: BaseNode, nodeB: BaseNode): void {
+  public connectNode(nodeA: GraphNode, nodeB: GraphNode): void {
     if (!this.state.has(nodeA) || !this.state.has(nodeB))
       throw new Error("Node does not exists in the current state");
     if (this.state.conns.find(conn => conn.nodeA === nodeA && conn.nodeB === nodeB)) return;
-    const conn = new LineConn(nodeA, nodeB, '#000'); // hardcoded for now
+    const conn = new GraphConn(nodeA, nodeB, '#000'); // hardcoded for now
     this.state.conns.push(conn);
     this.updateCanvas();
   }
 
   /**
    * Return node where x,y are in bounds
+   *
+   * @param x - x pos to look in
+   * @param y - y pos to look in
    */
-  public getNodeWithin(x: number, y: number): BaseNode | null {
+  public getNodeWithin(x: number, y: number): GraphNode | null {
     for (const node of this.state.nodes) {
       if (node.isInbounds(x, y)) return node;
     }
