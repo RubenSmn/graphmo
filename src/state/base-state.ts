@@ -1,15 +1,15 @@
-import { BaseNode } from '../node';
+import { GraphNode } from '../node';
 import { BaseConn } from '../conn';
 
 export interface BaseStateConfig {
-  nodes?: BaseNode[];
+  nodes?: GraphNode[];
   conns?: BaseConn[];
 }
 
 export class BaseState {
-  protected _nodes: BaseNode[];
+  protected _nodes: GraphNode[];
   protected _conns: BaseConn[];
-  protected _selection: BaseNode | null;
+  protected _selection: GraphNode | null;
 
   constructor({ nodes = [], conns = [] }: BaseStateConfig) {
     this._nodes = nodes;
@@ -20,8 +20,8 @@ export class BaseState {
   /**
    * Check if elm exists in state
    */
-  public has(elm: BaseNode | BaseConn): boolean {
-    if (elm instanceof BaseNode) return this._nodes.indexOf(elm) > -1;
+  public has(elm: GraphNode | BaseConn): boolean {
+    if (elm instanceof GraphNode) return this._nodes.indexOf(elm) > -1;
     if (elm instanceof BaseConn) return this._conns.indexOf(elm) > -1;
     return false;
   }
@@ -61,7 +61,7 @@ export class BaseState {
   /**
    * Set selection
    */
-  public set selection(node: BaseNode) {
+  public set selection(node: GraphNode) {
     this._selection = node;
   }
 }

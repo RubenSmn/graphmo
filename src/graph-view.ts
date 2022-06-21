@@ -1,4 +1,4 @@
-import { BaseNode } from './node';
+import { GraphNode } from './node';
 import { LineConn } from './conn';
 import { BaseState, DefaultState } from './state';
 import { BaseInputHandler, DefaultInputHandler } from './input';
@@ -55,7 +55,7 @@ export class GraphView {
   /**
    * Add node to graph view
    */
-  public addNode(node: BaseNode): void {
+  public addNode(node: GraphNode): void {
     this.state.nodes.push(node);
     node.draw(this.ctx);
   }
@@ -63,7 +63,7 @@ export class GraphView {
   /**
    * Connect two nodes with a connection
    */
-  public connectNode(nodeA: BaseNode, nodeB: BaseNode): void {
+  public connectNode(nodeA: GraphNode, nodeB: GraphNode): void {
     if (!this.state.has(nodeA) || !this.state.has(nodeB))
       throw new Error("Node does not exists in the current state");
     if (this.state.conns.find(conn => conn.nodeA === nodeA && conn.nodeB === nodeB)) return;
@@ -75,7 +75,7 @@ export class GraphView {
   /**
    * Return node where x,y are in bounds
    */
-  public getNodeWithin(x: number, y: number): BaseNode | null {
+  public getNodeWithin(x: number, y: number): GraphNode | null {
     for (const node of this.state.nodes) {
       if (node.isInbounds(x, y)) return node;
     }

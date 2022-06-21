@@ -1,8 +1,8 @@
-import { BaseNode } from '../node';
+import { GraphNode } from '../node';
 import { BaseConn } from './base-conn';
 
 export class LineConn extends BaseConn {
-  constructor(nodeA: BaseNode, nodeB: BaseNode, strokeStyle: string) {
+  constructor(nodeA: GraphNode, nodeB: GraphNode, strokeStyle: string) {
     super(nodeA, nodeB, strokeStyle);
   }
 }
