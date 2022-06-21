@@ -54,6 +54,8 @@ export class GraphView {
 
   /**
    * Add node to graph view
+   *
+   * @param node - node to add to view state
    */
   public addNode(node: GraphNode): void {
     this.state.nodes.push(node);
@@ -62,6 +64,9 @@ export class GraphView {
 
   /**
    * Connect two nodes with a connection
+   *
+   * @param nodeA - first node
+   * @param nodeB - second node
    */
   public connectNode(nodeA: GraphNode, nodeB: GraphNode): void {
     if (!this.state.has(nodeA) || !this.state.has(nodeB))
@@ -74,6 +79,9 @@ export class GraphView {
 
   /**
    * Return node where x,y are in bounds
+   *
+   * @param x - x pos to look in
+   * @param y - y pos to look in
    */
   public getNodeWithin(x: number, y: number): GraphNode | null {
     for (const node of this.state.nodes) {
